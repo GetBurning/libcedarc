@@ -95,12 +95,12 @@ int SbmStreamInit(SbmInterface* pSelf, SbmConfig* pSbmConfig)
     if(pSbm->frameFifo.pFrames == NULL)
     {
         loge("sbm->frameFifo.pFrames == NULL.");
-        free(pSbm);
         if(pSbm->mConfig.bVirFlag == 1)
             free(pSbmBuf);
         else
             CdcMemPfree(pSbm->mConfig.memops,pSbmBuf,
                         pSbm->mConfig.veOpsS, pSbm->mConfig.pVeOpsSelf);
+        free(pSbm);
         return -1;
     }
     memset(pSbm->frameFifo.pFrames, 0,  SBM_FRAME_FIFO_SIZE * sizeof(VideoStreamDataInfo));
@@ -113,14 +113,14 @@ int SbmStreamInit(SbmInterface* pSelf, SbmConfig* pSbmConfig)
     if(ret != 0)
     {
         loge("pthread_mutex_init failed.");
-        free(pSbm->frameFifo.pFrames);
-        free(pSbm);
-
         if(pSbm->mConfig.bVirFlag == 1)
             free(pSbmBuf);
         else
             CdcMemPfree(pSbm->mConfig.memops,pSbmBuf,
                         pSbm->mConfig.veOpsS, pSbm->mConfig.pVeOpsSelf);
+
+        free(pSbm->frameFifo.pFrames);
+        free(pSbm);
         return -1;
     }
     pSbm->pStreamBuffer      = pSbmBuf;
