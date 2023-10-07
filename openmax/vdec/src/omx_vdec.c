@@ -1064,7 +1064,8 @@ static OMX_ERRORTYPE __AwOmxVdecInit(OMX_HANDLETYPE hComponent, OMX_STRING pComp
     impl->bHadInitDecoderFlag   = OMX_FALSE;
     impl->bDecodeForceStopFlag  = OMX_FALSE;
 
-    strncpy((char*)impl->m_cName, pComponentName, OMX_MAX_STRINGNAME_SIZE);
+    strncpy((char*)impl->m_cName, pComponentName, OMX_MAX_STRINGNAME_SIZE-1);
+    impl->m_cName[OMX_MAX_STRINGNAME_SIZE-1] = '\0';
     err = omxSetRole(impl, NULL);
     if(err != OMX_ErrorNone)
         return err;

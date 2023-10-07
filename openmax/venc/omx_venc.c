@@ -452,7 +452,8 @@ static OMX_ERRORTYPE __AwOmxVencInit(OMX_HANDLETYPE pCmp_handle, OMX_STRING pCom
     }
 
     //init the compression format by component name.
-    strncpy((char*)impl->m_cName, pComponentName, OMX_MAX_STRINGNAME_SIZE);
+    strncpy((char*)impl->m_cName, pComponentName, OMX_MAX_STRINGNAME_SIZE-1);
+    impl->m_cName[OMX_MAX_STRINGNAME_SIZE-1] = '\0';
 
     if (!strncmp((char*)impl->m_cName, "OMX.allwinner.video.encoder.avc", OMX_MAX_STRINGNAME_SIZE))
     {
